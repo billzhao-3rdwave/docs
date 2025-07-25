@@ -13,10 +13,6 @@
   },
   "servers": [
     {
-      "description": "SwaggerHub API Auto Mocking",
-      "url": "https://virtserver.swaggerhub.com/rdwave/PublicApiReal/1.0.1"
-    },
-    {
       "description": "Real version of 3rdwave public api",
       "url": "http://localhost:8080/blinco-3ww-webapp/api/public"
     }
