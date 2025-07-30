@@ -20,7 +20,7 @@
     }
   ],
   "paths": {
-    "/plants": {
+    "/getTransportEventDate": {
       "post": {
         "description": "Query transport events info based on the location codes, transport unit label and transport event type",
         "requestBody": {
