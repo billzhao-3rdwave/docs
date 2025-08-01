@@ -57,6 +57,44 @@
           }
         }
       }
+    },
+    "/getActualDate": {
+      "post": {
+        "description": "Query transport events info based on the location codes, transport unit label and transport event type",
+        "requestBody": {
+          "description": "Transport Event Request to pass to the api",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/transportEventRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "transport event response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/transportEventResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

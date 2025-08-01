@@ -59,7 +59,9 @@
           {
             "group": "Endpoint examples",
             "pages": [
-              "api-reference/endpoint/getETADateFromUsPort"      
+              "api-reference/endpoint/getETADateFromUsPort",
+              "api-reference/endpoint/getActualDate"      
+  
                   ]
           }
         ]
