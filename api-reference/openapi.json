@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080/blinco-3ww-webapp/api"
+      "url": "http://localhost:8080/blinco-3ww-webapp/api/public/v1"
     }
   ],
   "security": [
@@ -19,7 +19,7 @@
     }
   ],
   "paths": {
-    "/getTransportEventDate": {
+    "/transportation/getTransportEventDate": {
       "post": {
         "tags": ["Transportation"],
         "operationId": "getTransportEventDate",
@@ -59,7 +59,7 @@
         }
       }
     },
-    "/getActualDeliveryDate": {
+    "/transportation/getActualDeliveryDate": {
       "post": {
         "tags": ["Transportation"],
         "operationId": "getActualDeliveryDate",
