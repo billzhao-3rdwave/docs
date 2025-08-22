@@ -1,9 +1,8 @@
 {
-  
   "openapi": "3.1.0",
   "info": {
     "title": "3rdwWave OpenApi Documentation",
-    "description": "A sample API that allowes the user to get access to 3rdwave data",
+    "description": "A sample API that allows the user to get access to 3rdwave data",
     "license": {
       "name": "MIT"
     },
@@ -11,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080/blinco-3ww-webapp/api/public/"
+      "url": "http://localhost:8080/blinco-3ww-webapp/api"
     }
   ],
   "security": [
@@ -22,31 +21,33 @@
   "paths": {
     "/getTransportEventDate": {
       "post": {
-        "description": "Query transport events info based on the location codes, transport unit label and transport event type",
+        "tags": ["Transportation"],
+        "operationId": "getTransportEventDate",
+        "description": "Query transport events info based on location codes, transport unit label, and event category",
         "requestBody": {
-          "description": "Transport Event Request to pass to the api",
+          "description": "Transport Event Request",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/transportEventRequestDto"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
-            "description": "transport event response",
+            "description": "Transport event response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/transportEventResponseDto"
+                  "$ref": "#/components/schemas/transportEventResponsesDto"
                 }
               }
             }
           },
           "400": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
@@ -58,33 +59,38 @@
         }
       }
     },
-    "/getActualDate": {
+    "/getActualDeliveryDate": {
       "post": {
-        "description": "Query transport events info based on the location codes, transport unit label and transport event type",
+        "tags": ["Transportation"],
+        "operationId": "getActualDeliveryDate",
+        "description": "Query actual delivery date based on transport unit and location",
         "requestBody": {
-          "description": "Transport Event Request to pass to the api",
+          "description": "Transport Unit Node Request",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/transportEventRequestDto"
+                "$ref": "#/components/schemas/transportUnitNodeRequestDto"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
-            "description": "transport event response",
+            "description": "Transport unit node response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/transportEventResponseDto"
+                  "$ref": "#/components/schemas/transportUnitNodeResponsesDto"
                 }
               }
             }
           },
+          "204": {
+            "description": "No content found"
+          },
           "400": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
@@ -102,63 +108,197 @@
       "transportEventRequestDto": {
         "type": "object",
         "properties": {
-            "locationCode":{
-              "description":"The port Code",
-              "type":"string",
-              "example":"USLGB"
-            },
-            "transportUnitLabel":{
-              "description":"The transport unit label",
-              "type":"string",
-              "example":"ABTU12345"
-            },
-            "transportEventType":{
-              "description":"The transport event type",
-              "type":"string",
-              "example":"ETA"
-            }
+          "location": { "type": "string" },
+          "locationCode": { "type": "string" },
+          "transportUnitLabel": { "type": "string" },
+          "eventCategory": { "type": "string" },
+          "eventSubcategory": { "type": "string" }
         }
       },
       "transportEventResponseDto": {
         "type": "object",
         "properties": {
-            "transportUnitNumber":{
-              "description":"Transport Unit Number",
-              "type":"string",
-              "example":"ABTU12345"
-            },
-            "transportUnitReference":{
-              "description":"The transport unit reference",
-              "type":"string",
-              "example":"CNT000001"
-            },
-            "eventDate":{
-              "description":"Event Date",
-              "type":"string",
-              "format": "date",
-              "example":"2025-01-01"
-            },
-            "transportEventType":{
-              "description":"The transport event type",
-              "type":"string",
-              "example":"ETA"
-            }
+          "id": { "type": "integer", "format": "int64" },
+          "transportUnitReference": { "type": "string" },
+          "transportUnitNumber": { "type": "string" },
+          "shipPlanTransportUnitId": { "type": "integer", "format": "int64" },
+          "eventCode": { "type": "string" },
+          "eventDescription": { "type": "string" },
+          "eventLocationCode": { "type": "string" },
+          "eventLocationDescription": { "type": "string" },
+          "eventCategory": { "type": "string" },
+          "eventSubcategory": { "type": "string" },
+          "transportNodeId": { "type": "integer", "format": "int64" },
+          "transportNodeLabel": { "type": "string" },
+          "relatedPurchaseOrderNumbers": { "type": "string" },
+          "shipPlanReference": { "type": "string" },
+          "shipPlanVectorId": { "type": "integer", "format": "int64" },
+          "shipPlanVectorStartLabel": { "type": "string" },
+          "shipPlanVectorEndLabel": { "type": "string" },
+          "transportNodeAreaCode": { "type": "string" },
+          "transportNodeAreaDescription": { "type": "string" },
+          "transportNodeAreaType": { "type": "string" },
+          "transportNodeAreaCountryFlagCode": { "type": "string" },
+          "transportNodeAccountCode": { "type": "string" },
+          "transportNodeAccountShortDescription": { "type": "string" },
+          "transportNodeAccountDescription": { "type": "string" },
+          "transportEventTypeCode": { "type": "string" },
+          "transportEventTypeDescription": { "type": "string" },
+          "transportEventTypeOrderPosition": { "type": "integer" },
+          "transportEventTypeMeaning": { "type": "string" },
+          "eventState": { "type": "string" },
+          "sourceType": { "type": "string" },
+          "carrierReference": { "type": "string" },
+          "carrierCode": { "type": "string" },
+          "carrierShortDescription": { "type": "string" },
+          "carrierDescription": { "type": "string" },
+          "missingMappingCount": { "type": "integer" },
+          "vesselName": { "type": "string" },
+          "voyageNumber": { "type": "string" },
+          "eventDate": { "type": "string" },
+          "eventTime": { "type": "string" },
+          "createdByUsername": { "type": "string" },
+          "createdOn": { "type": "string" },
+          "processedByUsername": { "type": "string" },
+          "processedOn": { "type": "string" },
+          "ignored": { "type": "boolean" },
+          "ignoredReason": { "type": "string" },
+          "replaced": { "type": "boolean" },
+          "autoProcessed": { "type": "boolean" },
+          "triggerCount": { "type": "integer" },
+          "daysOfEventDeliveryDelay": { "type": "integer" },
+          "assumed": { "type": "boolean" },
+          "triggeredVesselArrival": { "type": "boolean" },
+          "triggeredVesselDeparture": { "type": "boolean" },
+          "triggeredGateOutEmpty": { "type": "boolean" },
+          "triggeredGateIn": { "type": "boolean" },
+          "triggeredLoad": { "type": "boolean" },
+          "triggeredUnload": { "type": "boolean" },
+          "triggeredCarrierRelease": { "type": "boolean" },
+          "triggeredCustomsRelease": { "type": "boolean" },
+          "triggeredReturn": { "type": "boolean" },
+          "triggeredPickUp": { "type": "boolean" },
+          "triggeredReceive": { "type": "boolean" },
+          "triggeredEmpty": { "type": "boolean" },
+          "triggeredDelivery": { "type": "boolean" },
+          "triggeredDetentionStart": { "type": "boolean" },
+          "triggeredDetentionEnd": { "type": "boolean" },
+          "triggeredDemurrageStart": { "type": "boolean" },
+          "triggeredDemurrageEnd": { "type": "boolean" },
+          "triggeredStartNodeChange": { "type": "boolean" },
+          "triggeredEndNodeChange": { "type": "boolean" },
+          "triggeredEtaChange": { "type": "boolean" },
+          "triggeredEtdChange": { "type": "boolean" },
+          "triggeredVesselNameChange": { "type": "boolean" },
+          "daysChanged": { "type": "integer", "format": "int64" },
+          "daysChangedFromOriginal": { "type": "integer", "format": "int64" },
+          "originalNodeId": { "type": "integer", "format": "int64" },
+          "originalNodeLabel": { "type": "string" },
+          "originalDate": { "type": "string" },
+          "previousDate": { "type": "string" },
+          "source": { "type": "string" },
+          "subsource": { "type": "string" },
+          "status": { "type": "string" },
+          "requiresAcknowledgement": { "type": "boolean" },
+          "readyToProcess": { "type": "boolean" },
+          "acknowledgedByUsername": { "type": "string" },
+          "acknowledgedOn": { "type": "string" },
+          "transportUnitLatestSocialNote": { "type": "string" },
+          "trackingReference": { "type": "string" }
+        }
+      },
+      "transportEventResponsesDto": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" },
+          "results": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/transportEventResponseDto" }
+          }
+        }
+      },
+      "transportUnitNodeRequestDto": {
+        "type": "object",
+        "properties": {
+          "location": { "type": "string" },
+          "transportUnitLabel": { "type": "string" },
+          "dateArrivedEstimate": { "type": "string" },
+          "dateArrivedActual": { "type": "string" },
+          "dateArrivedBest": { "type": "string" },
+          "dateDepartedBest": { "type": "string" }
+        }
+      },
+      "transportUnitNodeResponseDto": {
+        "type": "object",
+        "properties": {
+          "pickupNode": { "type": "boolean" },
+          "portOfLoading": { "type": "boolean" },
+          "portOfUnloading": { "type": "boolean" },
+          "portOfEntry": { "type": "boolean" },
+          "portOfDischarge": { "type": "boolean" },
+          "usIsfPort": { "type": "boolean" },
+          "inlandPort": { "type": "boolean" },
+          "destinationNode": { "type": "boolean" },
+          "placeOfLading": { "type": "boolean" },
+          "placeOfUnlading": { "type": "boolean" },
+          "tracksDemurrage": { "type": "boolean" },
+          "tracksDetention": { "type": "boolean" },
+          "transportNodeLabel": { "type": "string" },
+          "transportNodeCountryCode": { "type": "string" },
+          "transportNodeFlagCode": { "type": "string" },
+          "sequenceIndex": { "type": "integer" },
+          "shipPlanTransportUnitId": { "type": "integer", "format": "int64" },
+          "shipPlanTransportUnitLabel": { "type": "string" },
+          "shipPlanReference": { "type": "string" },
+          "transportUnitReference": { "type": "string" },
+          "transportUnitNumber": { "type": "string" },
+          "transportUnitLabel": { "type": "string" },
+          "transportUnitPriorityLevel": { "type": "integer" },
+          "loadType": { "type": "string" },
+          "loadStatus": { "type": "string" },
+          "transportUnitTypeCode": { "type": "string" },
+          "transportUnitTypeDescription": { "type": "string" },
+          "transportUnitTypeShortDescription": { "type": "string" },
+          "transportUnitTypeClassification": { "type": "string" },
+          "productDateDeliverByRequested": { "type": "string" },
+          "productDateDeliverByPromised": { "type": "string" },
+          "productDateDeliverByRequired": { "type": "string" },
+          "productDateDeliverByPredicted": { "type": "string" },
+          "productDateDeliverByActual": { "type": "string" },
+          "timeIn": { "type": "string" },
+          "timeUnloaded": { "type": "string" },
+          "timeLoaded": { "type": "string" },
+          "timeOut": { "type": "string" },
+          "daysAtNode": { "type": "integer" },
+          "dateArrivedPlanned": { "type": "string" },
+          "dateArrivedConfirmed": { "type": "string" },
+          "dateArrivedEstimated": { "type": "string" },
+          "dateArrivedInstructed": { "type": "string" },
+          "dateArrivedPredicted": { "type": "string" },
+          "dateArrivedActual": { "type": "string" },
+          "dateArrivedBest": { "type": "string" },
+          "dateArrivedBestType": { "type": "string" },
+          "dateArrivedBestLastUpdatedOn": { "type": "string" },
+          "assumedDateArrivedActual": { "type": "boolean" },
+          "assumedDateArrivedActualCode": { "type": "string" }
+        }
+      },
+      "transportUnitNodeResponsesDto": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" },
+          "results": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/transportUnitNodeResponseDto" }
+          }
         }
       },
       "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
         "type": "object",
+        "required": ["error", "message"],
         "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
+          "error": { "type": "integer", "format": "int32" },
+          "message": { "type": "string" }
         }
       }
     },
