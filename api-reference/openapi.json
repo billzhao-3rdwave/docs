@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080/blinco-3ww-webapp/api/public/v1"
+      "url": "http://localhost:8080/blinco-3ww-webapp/api"
     }
   ],
   "security": [
@@ -19,10 +19,12 @@
     }
   ],
   "paths": {
-    "/transportation/getTransportEventDate": {
+    "/public/v1/transportation/getTransportEvent": {
       "post": {
-        "tags": ["Transportation"],
-        "operationId": "getTransportEventDate",
+        "tags": [
+          "Transportation"
+        ],
+        "operationId": "searchTransportEvent",
         "description": "Query transport events info based on location codes, transport unit label, and event category",
         "requestBody": {
           "description": "Transport Event Request",
@@ -30,7 +32,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/transportEventRequestDto"
+                "$ref": "#/components/schemas/TransportEventRequest"
               }
             }
           }
@@ -41,7 +43,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/transportEventResponsesDto"
+                  "$ref": "#/components/schemas/TransportEventResponses"
                 }
               }
             }
@@ -59,10 +61,12 @@
         }
       }
     },
-    "/transportation/getActualDeliveryDate": {
+    "/public/v1/transportation/getActualDeliveryDate": {
       "post": {
-        "tags": ["Transportation"],
-        "operationId": "getActualDeliveryDate",
+        "tags": [
+          "Transportation"
+        ],
+        "operationId": "searchActualDeliveryDate",
         "description": "Query actual delivery date based on transport unit and location",
         "requestBody": {
           "description": "Transport Unit Node Request",
@@ -70,7 +74,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/transportUnitNodeRequestDto"
+                "$ref": "#/components/schemas/TransportUnitNodeRequest"
               }
             }
           }
@@ -81,7 +85,493 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/transportUnitNodeResponsesDto"
+                  "$ref": "#/components/schemas/TransportUnitNodeResponses"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content found"
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/v1/transportation/transport-event/search": {
+      "post": {
+        "tags": [
+          "Transportation"
+        ],
+        "operationId": "searchTransportEvents",
+        "description": "Query transport events info based on location codes, transport unit label, and event category",
+        "requestBody": {
+          "description": "Transport Event Request",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransportEventRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transport event response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportEventResponses"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/v1/transportation/shipment-node/search": {
+      "post": {
+        "tags": [
+          "Transportation"
+        ],
+        "operationId": "searchShipmentNodes",
+        "description": "Query Shipment Node",
+        "requestBody": {
+          "description": "Transport Unit Node Request",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransportUnitNodeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transport unit node response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportUnitNodeResponses"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content found"
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/v1/transportation/shipment/search": {
+      "post": {
+        "tags": [
+          "Transportation"
+        ],
+        "operationId": "searchShipments",
+        "description": "Query Ship Plan Transport Unit",
+        "requestBody": {
+          "description": "Shipment  Search Request",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentSearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Shipment Search response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentResponses"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content found"
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/v1/transportation/shipment-vector/search": {
+      "post": {
+        "tags": [
+          "Transportation"
+        ],
+        "operationId": "searchShipmentVectors",
+        "description": "Query Ship Plan Transport Unit Vectors",
+        "requestBody": {
+          "description": "Shipment Vector Search Request",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShipmentVectorSearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Shipment Vector Search Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentVectorResponses"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content found"
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/v1/transportation/transport-unit/search": {
+      "post": {
+        "tags": [
+          "Transportation"
+        ],
+        "operationId": "searchTransportUnits",
+        "description": "Query Transport Units",
+        "requestBody": {
+          "description": "Transport Unit Search Request",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransportUnitSearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transport Unit Search Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportUnitResponses"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content found"
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/v1/transportation/shipment-node/{id}": {
+      "get": {
+        "tags": [
+          "Transportation"
+        ],
+        "operationId": "getTransportNode",
+        "description": "Query actual Transport Node",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transport unit node response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportUnitNodeResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content found"
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/v1/transportation/shipment/{id}/detail": {
+      "get": {
+        "tags": [
+          "Transportation"
+        ],
+        "operationId": "getShipmentDetail",
+        "description": "Query Shipment Detail",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shipment Detail Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShipmentDetail"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content found"
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/v1/transportation/transport-unit/{reference}": {
+      "get": {
+        "tags": [
+          "Transportation"
+        ],
+        "operationId": "getTransportUnit",
+        "description": "Query Transport Unit",
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transport Unit Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportUnit"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content found"
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/v1/transportation/transport-unit/{reference}/detail": {
+      "get": {
+        "tags": [
+          "Transportation"
+        ],
+        "operationId": "getTransportUnitDetail",
+        "description": "Query Transport Unit Detail",
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transport Unit Detail Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportUnitDetail"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content found"
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/v1/account/account/{reference}/detail": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "operationId": "getAccountDetail",
+        "description": "Query Account Detail",
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account Detail Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountDetail"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content found"
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/v1/account/address/{id}": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "operationId": "getAddress",
+        "description": "Query Address",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Address Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Address"
                 }
               }
             }
@@ -105,207 +595,2272 @@
   },
   "components": {
     "schemas": {
-      "transportEventRequestDto": {
+      "TransportEventRequest": {
         "type": "object",
         "properties": {
-          "location": { "type": "string" },
-          "locationCode": { "type": "string" },
-          "transportUnitLabel": { "type": "string" },
-          "eventCategory": { "type": "string" },
-          "eventSubcategory": { "type": "string" }
-        }
-      },
-      "transportEventResponseDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "integer", "format": "int64" },
-          "transportUnitReference": { "type": "string" },
-          "transportUnitNumber": { "type": "string" },
-          "shipPlanTransportUnitId": { "type": "integer", "format": "int64" },
-          "eventCode": { "type": "string" },
-          "eventDescription": { "type": "string" },
-          "eventLocationCode": { "type": "string" },
-          "eventLocationDescription": { "type": "string" },
-          "eventCategory": { "type": "string" },
-          "eventSubcategory": { "type": "string" },
-          "transportNodeId": { "type": "integer", "format": "int64" },
-          "transportNodeLabel": { "type": "string" },
-          "relatedPurchaseOrderNumbers": { "type": "string" },
-          "shipPlanReference": { "type": "string" },
-          "shipPlanVectorId": { "type": "integer", "format": "int64" },
-          "shipPlanVectorStartLabel": { "type": "string" },
-          "shipPlanVectorEndLabel": { "type": "string" },
-          "transportNodeAreaCode": { "type": "string" },
-          "transportNodeAreaDescription": { "type": "string" },
-          "transportNodeAreaType": { "type": "string" },
-          "transportNodeAreaCountryFlagCode": { "type": "string" },
-          "transportNodeAccountCode": { "type": "string" },
-          "transportNodeAccountShortDescription": { "type": "string" },
-          "transportNodeAccountDescription": { "type": "string" },
-          "transportEventTypeCode": { "type": "string" },
-          "transportEventTypeDescription": { "type": "string" },
-          "transportEventTypeOrderPosition": { "type": "integer" },
-          "transportEventTypeMeaning": { "type": "string" },
-          "eventState": { "type": "string" },
-          "sourceType": { "type": "string" },
-          "carrierReference": { "type": "string" },
-          "carrierCode": { "type": "string" },
-          "carrierShortDescription": { "type": "string" },
-          "carrierDescription": { "type": "string" },
-          "missingMappingCount": { "type": "integer" },
-          "vesselName": { "type": "string" },
-          "voyageNumber": { "type": "string" },
-          "eventDate": { "type": "string" },
-          "eventTime": { "type": "string" },
-          "createdByUsername": { "type": "string" },
-          "createdOn": { "type": "string" },
-          "processedByUsername": { "type": "string" },
-          "processedOn": { "type": "string" },
-          "ignored": { "type": "boolean" },
-          "ignoredReason": { "type": "string" },
-          "replaced": { "type": "boolean" },
-          "autoProcessed": { "type": "boolean" },
-          "triggerCount": { "type": "integer" },
-          "daysOfEventDeliveryDelay": { "type": "integer" },
-          "assumed": { "type": "boolean" },
-          "triggeredVesselArrival": { "type": "boolean" },
-          "triggeredVesselDeparture": { "type": "boolean" },
-          "triggeredGateOutEmpty": { "type": "boolean" },
-          "triggeredGateIn": { "type": "boolean" },
-          "triggeredLoad": { "type": "boolean" },
-          "triggeredUnload": { "type": "boolean" },
-          "triggeredCarrierRelease": { "type": "boolean" },
-          "triggeredCustomsRelease": { "type": "boolean" },
-          "triggeredReturn": { "type": "boolean" },
-          "triggeredPickUp": { "type": "boolean" },
-          "triggeredReceive": { "type": "boolean" },
-          "triggeredEmpty": { "type": "boolean" },
-          "triggeredDelivery": { "type": "boolean" },
-          "triggeredDetentionStart": { "type": "boolean" },
-          "triggeredDetentionEnd": { "type": "boolean" },
-          "triggeredDemurrageStart": { "type": "boolean" },
-          "triggeredDemurrageEnd": { "type": "boolean" },
-          "triggeredStartNodeChange": { "type": "boolean" },
-          "triggeredEndNodeChange": { "type": "boolean" },
-          "triggeredEtaChange": { "type": "boolean" },
-          "triggeredEtdChange": { "type": "boolean" },
-          "triggeredVesselNameChange": { "type": "boolean" },
-          "daysChanged": { "type": "integer", "format": "int64" },
-          "daysChangedFromOriginal": { "type": "integer", "format": "int64" },
-          "originalNodeId": { "type": "integer", "format": "int64" },
-          "originalNodeLabel": { "type": "string" },
-          "originalDate": { "type": "string" },
-          "previousDate": { "type": "string" },
-          "source": { "type": "string" },
-          "subsource": { "type": "string" },
-          "status": { "type": "string" },
-          "requiresAcknowledgement": { "type": "boolean" },
-          "readyToProcess": { "type": "boolean" },
-          "acknowledgedByUsername": { "type": "string" },
-          "acknowledgedOn": { "type": "string" },
-          "transportUnitLatestSocialNote": { "type": "string" },
-          "trackingReference": { "type": "string" }
-        }
-      },
-      "transportEventResponsesDto": {
-        "type": "object",
-        "properties": {
-          "message": { "type": "string" },
-          "results": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/transportEventResponseDto" }
+          "location": {
+            "type": "string"
+          },
+          "locationCode": {
+            "type": "string"
+          },
+          "transportUnitLabel": {
+            "type": "string"
+          },
+          "eventCategory": {
+            "type": "string"
+          },
+          "eventSubcategory": {
+            "type": "string"
           }
         }
       },
-      "transportUnitNodeRequestDto": {
+      "TransportEventResponse": {
         "type": "object",
         "properties": {
-          "location": { "type": "string" },
-          "transportUnitLabel": { "type": "string" },
-          "dateArrivedEstimate": { "type": "string" },
-          "dateArrivedActual": { "type": "string" },
-          "dateArrivedBest": { "type": "string" },
-          "dateDepartedBest": { "type": "string" }
-        }
-      },
-      "transportUnitNodeResponseDto": {
-        "type": "object",
-        "properties": {
-          "pickupNode": { "type": "boolean" },
-          "portOfLoading": { "type": "boolean" },
-          "portOfUnloading": { "type": "boolean" },
-          "portOfEntry": { "type": "boolean" },
-          "portOfDischarge": { "type": "boolean" },
-          "usIsfPort": { "type": "boolean" },
-          "inlandPort": { "type": "boolean" },
-          "destinationNode": { "type": "boolean" },
-          "placeOfLading": { "type": "boolean" },
-          "placeOfUnlading": { "type": "boolean" },
-          "tracksDemurrage": { "type": "boolean" },
-          "tracksDetention": { "type": "boolean" },
-          "transportNodeLabel": { "type": "string" },
-          "transportNodeCountryCode": { "type": "string" },
-          "transportNodeFlagCode": { "type": "string" },
-          "sequenceIndex": { "type": "integer" },
-          "shipPlanTransportUnitId": { "type": "integer", "format": "int64" },
-          "shipPlanTransportUnitLabel": { "type": "string" },
-          "shipPlanReference": { "type": "string" },
-          "transportUnitReference": { "type": "string" },
-          "transportUnitNumber": { "type": "string" },
-          "transportUnitLabel": { "type": "string" },
-          "transportUnitPriorityLevel": { "type": "integer" },
-          "loadType": { "type": "string" },
-          "loadStatus": { "type": "string" },
-          "transportUnitTypeCode": { "type": "string" },
-          "transportUnitTypeDescription": { "type": "string" },
-          "transportUnitTypeShortDescription": { "type": "string" },
-          "transportUnitTypeClassification": { "type": "string" },
-          "productDateDeliverByRequested": { "type": "string" },
-          "productDateDeliverByPromised": { "type": "string" },
-          "productDateDeliverByRequired": { "type": "string" },
-          "productDateDeliverByPredicted": { "type": "string" },
-          "productDateDeliverByActual": { "type": "string" },
-          "timeIn": { "type": "string" },
-          "timeUnloaded": { "type": "string" },
-          "timeLoaded": { "type": "string" },
-          "timeOut": { "type": "string" },
-          "daysAtNode": { "type": "integer" },
-          "dateArrivedPlanned": { "type": "string" },
-          "dateArrivedConfirmed": { "type": "string" },
-          "dateArrivedEstimated": { "type": "string" },
-          "dateArrivedInstructed": { "type": "string" },
-          "dateArrivedPredicted": { "type": "string" },
-          "dateArrivedActual": { "type": "string" },
-          "dateArrivedBest": { "type": "string" },
-          "dateArrivedBestType": { "type": "string" },
-          "dateArrivedBestLastUpdatedOn": { "type": "string" },
-          "assumedDateArrivedActual": { "type": "boolean" },
-          "assumedDateArrivedActualCode": { "type": "string" }
-        }
-      },
-      "transportUnitNodeResponsesDto": {
-        "type": "object",
-        "properties": {
-          "message": { "type": "string" },
-          "results": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/transportUnitNodeResponseDto" }
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "transportUnitReference": {
+            "type": "string"
+          },
+          "transportUnitNumber": {
+            "type": "string"
+          },
+          "shipPlanTransportUnitId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "eventCode": {
+            "type": "string"
+          },
+          "eventDescription": {
+            "type": "string"
+          },
+          "eventLocationCode": {
+            "type": "string"
+          },
+          "eventLocationDescription": {
+            "type": "string"
+          },
+          "eventCategory": {
+            "type": "string"
+          },
+          "eventSubcategory": {
+            "type": "string"
+          },
+          "transportNodeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "transportNodeLabel": {
+            "type": "string"
+          },
+          "relatedPurchaseOrderNumbers": {
+            "type": "string"
+          },
+          "shipPlanReference": {
+            "type": "string"
+          },
+          "shipPlanVectorId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "shipPlanVectorStartLabel": {
+            "type": "string"
+          },
+          "shipPlanVectorEndLabel": {
+            "type": "string"
+          },
+          "transportNodeAreaCode": {
+            "type": "string"
+          },
+          "transportNodeAreaDescription": {
+            "type": "string"
+          },
+          "transportNodeAreaType": {
+            "type": "string"
+          },
+          "transportNodeAreaCountryFlagCode": {
+            "type": "string"
+          },
+          "transportNodeAccountCode": {
+            "type": "string"
+          },
+          "transportNodeAccountShortDescription": {
+            "type": "string"
+          },
+          "transportNodeAccountDescription": {
+            "type": "string"
+          },
+          "transportEventTypeCode": {
+            "type": "string"
+          },
+          "transportEventTypeDescription": {
+            "type": "string"
+          },
+          "transportEventTypeOrderPosition": {
+            "type": "integer"
+          },
+          "transportEventTypeMeaning": {
+            "$ref": "#/components/schemas/TransportEventTypeMeaning"
+          },
+          "eventState": {
+            "$ref": "#/components/schemas/TransportEventState"
+          },
+          "sourceType": {
+            "$ref": "#/components/schemas/TransportEventSourceType"
+          },
+          "carrier": {
+            "$ref": "#/components/schemas/AccountRef"
+          },
+          "missingMappingCount": {
+            "type": "integer"
+          },
+          "vesselName": {
+            "type": "string"
+          },
+          "voyageNumber": {
+            "type": "string"
+          },
+          "eventDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "eventTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "createdByUsername": {
+            "type": "string"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "processedByUsername": {
+            "type": "string"
+          },
+          "processedOn": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "ignored": {
+            "type": "boolean"
+          },
+          "ignoredReason": {
+            "type": "string"
+          },
+          "replaced": {
+            "type": "boolean"
+          },
+          "autoProcessed": {
+            "type": "boolean"
+          },
+          "triggerCount": {
+            "type": "integer"
+          },
+          "daysOfEventDeliveryDelay": {
+            "type": "integer"
+          },
+          "assumed": {
+            "type": "boolean"
+          },
+          "daysChanged": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "daysChangedFromOriginal": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "originalNodeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "originalNodeLabel": {
+            "type": "string"
+          },
+          "originalDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "previousDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "source": {
+            "type": "string"
+          },
+          "subsource": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TransportUnitTransportEventStatus"
+          },
+          "requiresAcknowledgement": {
+            "type": "boolean"
+          },
+          "readyToProcess": {
+            "type": "boolean"
+          },
+          "acknowledgedByUsername": {
+            "type": "string"
+          },
+          "acknowledgedOn": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "transportUnitLatestSocialNote": {
+            "type": "string"
+          },
+          "trackingReference": {
+            "type": "string"
           }
         }
+      },
+      "TransportEventResponses": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransportEventResponse"
+            }
+          }
+        }
+      },
+      "TransportUnitNodeRequest": {
+        "type": "object",
+        "properties": {
+          "transportNodeCountryCode": {
+            "type": "string"
+          },
+          "transportUnitLabel": {
+            "type": "string"
+          },
+          "dateArrivedEstimate": {
+            "type": "string"
+          },
+          "dateArrivedActual": {
+            "type": "string"
+          },
+          "dateArrivedBest": {
+            "type": "string"
+          },
+          "dateDepartedBest": {
+            "type": "string"
+          },
+          "transportNodeType": {
+            "type": "string"
+          },
+          "transportNodeCode": {
+            "type": "string"
+          },
+          "transportNodeDescription": {
+            "type": "string"
+          },
+          "transportNodeAccountCode": {
+            "type": "string"
+          }
+        }
+      },
+      "TransportUnitNodeResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pickupNode": {
+            "type": "boolean"
+          },
+          "portOfLoading": {
+            "type": "boolean"
+          },
+          "portOfUnloading": {
+            "type": "boolean"
+          },
+          "portOfEntry": {
+            "type": "boolean"
+          },
+          "portOfDischarge": {
+            "type": "boolean"
+          },
+          "usIsfPort": {
+            "type": "boolean"
+          },
+          "inlandPort": {
+            "type": "boolean"
+          },
+          "destinationNode": {
+            "type": "boolean"
+          },
+          "placeOfLading": {
+            "type": "boolean"
+          },
+          "placeOfUnlading": {
+            "type": "boolean"
+          },
+          "tracksDemurrage": {
+            "type": "boolean"
+          },
+          "tracksDetention": {
+            "type": "boolean"
+          },
+          "transportNodeLabel": {
+            "type": "string"
+          },
+          "transportNodeCountryCode": {
+            "type": "string"
+          },
+          "transportNodeFlagCode": {
+            "type": "string"
+          },
+          "transportNodeType": {
+            "$ref": "#/components/schemas/TransportNodeType"
+          },
+          "transportNodeCode": {
+            "type": "string"
+          },
+          "transportNodeDescription": {
+            "type": "string"
+          },
+          "transportNodeAccountCode": {
+            "type": "string"
+          },
+          "sequenceIndex": {
+            "type": "integer"
+          },
+          "shipPlanTransportUnitId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "shipPlanTransportUnitLabel": {
+            "type": "string"
+          },
+          "shipPlanReference": {
+            "type": "string"
+          },
+          "transportUnitReference": {
+            "type": "string"
+          },
+          "transportUnitNumber": {
+            "type": "string"
+          },
+          "transportUnitLabel": {
+            "type": "string"
+          },
+          "transportUnitPriorityLevel": {
+            "type": "integer"
+          },
+          "loadType": {
+            "$ref": "#/components/schemas/TransportUnitLoadType"
+          },
+          "loadStatus": {
+            "$ref": "#/components/schemas/TransportUnitLoadStatus"
+          },
+          "transportUnitTypeCode": {
+            "type": "string"
+          },
+          "transportUnitTypeDescription": {
+            "type": "string"
+          },
+          "transportUnitTypeShortDescription": {
+            "type": "string"
+          },
+          "transportUnitTypeClassification": {
+            "$ref": "#/components/schemas/TransportUnitClassification"
+          },
+          "productDateDeliverByRequested": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "productDateDeliverByPromised": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "productDateDeliverByRequired": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "productDateDeliverByPredicted": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "productDateDeliverByActual": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "timeIn": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "timeUnloaded": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "timeLoaded": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "timeOut": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "daysAtNode": {
+            "type": "integer"
+          },
+          "dateArrivedPlanned": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateArrivedConfirmed": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateArrivedEstimated": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateArrivedInstructed": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateArrivedPredicted": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateArrivedActual": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateArrivedBest": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateArrivedBestType": {
+            "$ref": "#/components/schemas/DateType"
+          },
+          "dateArrivedBestLastUpdatedOn": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "assumedDateArrivedActual": {
+            "type": "boolean"
+          },
+          "assumedDateArrivedActualCode": {
+            "$ref": "#/components/schemas/AssumedDateReasonCode"
+          }
+        }
+      },
+      "TransportUnitNodeResponses": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransportUnitNodeResponse"
+            }
+          }
+        }
+      },
+      "ShipmentVectorSearchRequest": {
+        "type": "object",
+        "description": "Search Request for a shipment vector",
+        "properties": {
+          "vectorMode": {
+            "type": "string"
+          },
+          "startTransportNode": {
+            "type": "string"
+          }
+        }
+      },
+      "ShipmentVector": {
+        "type": "object",
+        "description": "Representation of a short version of ShipPlanVectorTransportUnitRow",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "vectorId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "vectorStatus": {
+            "$ref": "#/components/schemas/VectorStatus"
+          },
+          "contractShipPlanVectorTransportUnitId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "contractShipPlanVectorId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "contractShipPlanVectorTransportUnitEndLabel": {
+            "type": "string"
+          },
+          "shipPlanTransportUnitLabel": {
+            "type": "string"
+          },
+          "deliveryOrderTransportUnitId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "deliveryOrderId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "deliveryOrderReference": {
+            "type": "string"
+          },
+          "terminalOperator": {
+            "$ref": "#/components/schemas/AccountRef"
+          },
+          "freightForwarder": {
+            "$ref": "#/components/schemas/AccountRef"
+          },
+          "contractForwarder": {
+            "$ref": "#/components/schemas/AccountRef"
+          },
+          "carrier": {
+            "$ref": "#/components/schemas/AccountRef"
+          },
+          "referenceCarrier": {
+            "$ref": "#/components/schemas/AccountRef"
+          },
+          "shipPlanReference": {
+            "type": "string"
+          },
+          "startTransportNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "referenceStartTransportNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "endTransportNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "referenceEndTransportNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "finalDestinationTransportNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "relatedBasketIds": {
+            "type": "string"
+          },
+          "relatedVendorInvoiceIds": {
+            "type": "string"
+          },
+          "relatedPurchaseOrderNumbers": {
+            "type": "string"
+          },
+          "relatedSupplierDescriptions": {
+            "type": "string"
+          }
+        }
+      },
+      "ShipmentVectorDetail": {
+        "type": "object",
+        "description": "Representation of a ShipPlanVectorTransportUnitRow",
+        "properties": {
+          "shipPlanVector": {
+            "$ref": "#/components/schemas/ShipmentVector"
+          },
+          "relatedLogisticsSuppliers": {
+            "type": "string"
+          },
+          "relatedVendorInvoiceNumbers": {
+            "type": "string"
+          },
+          "relatedCustomsEntryNumbers": {
+            "type": "string"
+          },
+          "customsCurrentStatus": {
+            "type": "string"
+          },
+          "customsLastStatusDate": {
+            "type": "string"
+          },
+          "customsAdditionalDetails": {
+            "type": "string"
+          },
+          "customsReleaseDate": {
+            "type": "string"
+          },
+          "currentPosition": {
+            "$ref": "#/components/schemas/TransportUnitPosition"
+          },
+          "etd": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "eta": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "etr": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "plannedEtd": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "plannedEta": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "plannedEtr": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "referenceEffectiveArrivalDateFromPreviousVector": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "referenceEffectiveDepartureDateFromCurrentVector": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "referenceEffectiveArrivalDateFromCurrentVector": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "referenceEffectiveReceiptDateFromCurrentVector": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "effectiveArrivalDateFromPreviousVector": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "etaDateFromPreviousVector": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "actualArrivalDateFromPreviousVector": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "plannedCounter": {
+            "type": "integer"
+          },
+          "isPlannedEtdOrEtaDateReset": {
+            "type": "boolean"
+          },
+          "isPlannedEtrDateReset": {
+            "type": "boolean"
+          },
+          "isPlanningCandidate": {
+            "type": "boolean"
+          },
+          "plannedStatus": {
+            "type": "string"
+          },
+          "dateDeparted": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateArrived": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "transitDays": {
+            "type": "integer"
+          },
+          "transitTime": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "dateLoaded": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "eventLoadedId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dateUnloaded": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "eventUnloadedId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dateReceived": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateCompleted": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "emptiedDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "pickedUpDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "returnedDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateGoodsReady": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateRequiredDelivery": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "transportUnitPriorityLevel": {
+            "type": "integer"
+          },
+          "budgetStatus": {
+            "type": "string"
+          },
+          "paymentStatus": {
+            "type": "string"
+          },
+          "trackAndTraceEnabled": {
+            "type": "boolean"
+          },
+          "trackAndTraceDisabledReasonType": {
+            "type": "string"
+          },
+          "trackAndTraceDisabledReasonNote": {
+            "type": "string"
+          },
+          "trackAndTraceEnded": {
+            "type": "boolean"
+          },
+          "demurrageFreeTime": {
+            "type": "integer"
+          },
+          "detentionFreeTime": {
+            "type": "integer"
+          },
+          "demurrageTimeType": {
+            "type": "string"
+          },
+          "detentionTimeType": {
+            "type": "string"
+          },
+          "portDemurrageId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "portDetentionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "physicalVector": {
+            "type": "boolean"
+          },
+          "contractVector": {
+            "type": "boolean"
+          },
+          "shipPlanTransportUnit": {
+            "$ref": "#/components/schemas/TransportUnitRef"
+          },
+          "transportUnitType": {
+            "$ref": "#/components/schemas/TransportUnitTypeRef"
+          },
+          "transportUnitShipmentStatus": {
+            "$ref": "#/components/schemas/TransportUnitShipmentStatus"
+          },
+          "transportUnitCalculatedPieceCount": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "currentFreightBookingRequestId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "currentFreightBookingRequestReference": {
+            "type": "string"
+          },
+          "currentFreightBookingRequestBookingNumber": {
+            "type": "string"
+          },
+          "currentFreightBookingRequestBookingDate": {
+            "type": "string"
+          },
+          "currentFreightBookingId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "currentFreightBookingReference": {
+            "type": "string"
+          },
+          "currentFreightBookingBookingNumber": {
+            "type": "string"
+          },
+          "currentFreightBookingBookingDate": {
+            "type": "string"
+          },
+          "currentFreightBookingVesselName": {
+            "type": "string"
+          },
+          "currentFreightBookingVoyage": {
+            "type": "string"
+          },
+          "possibleRolledBooking": {
+            "type": "boolean"
+          },
+          "rolledBooking": {
+            "type": "boolean"
+          },
+          "transportContractId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "transportContractReference": {
+            "type": "string"
+          },
+          "transportContractVendorReference": {
+            "type": "string"
+          },
+          "expectedAmountInPrimary": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "invoicedAmountInPrimary": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "invoicedVariancePercent": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "masterBillCount": {
+            "type": "integer"
+          },
+          "houseBillCount": {
+            "type": "integer"
+          },
+          "masterBillOriginalsReceivedCount": {
+            "type": "integer"
+          },
+          "houseBillOriginalsReceivedCount": {
+            "type": "integer"
+          },
+          "budget": {
+            "type": "string"
+          },
+          "invoice": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string"
+          },
+          "invoiceMissing": {
+            "type": "boolean"
+          },
+          "budgetMissing": {
+            "type": "boolean"
+          },
+          "expectsDeliveryOrder": {
+            "type": "boolean"
+          },
+          "expectsDeliveryOrderAtTerminal": {
+            "type": "boolean"
+          },
+          "expectsDeliveryOrderFromCarrier": {
+            "type": "boolean"
+          },
+          "deliveryOrderNumber": {
+            "type": "string"
+          },
+          "currentCarrierBillOfLadingNumber": {
+            "type": "string"
+          },
+          "currentForwarderBillOfLadingNumber": {
+            "type": "string"
+          },
+          "masterBillOfLadingNumber": {
+            "type": "string"
+          },
+          "houseBillOfLadingNumber": {
+            "type": "string"
+          },
+          "seawayBillNumber": {
+            "type": "string"
+          },
+          "customsEntryNumber": {
+            "type": "string"
+          },
+          "customsEntryDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "customsEntryStatus": {
+            "type": "string"
+          },
+          "dangerousGoodsFlag": {
+            "type": "boolean"
+          },
+          "reeferFlag": {
+            "type": "boolean"
+          },
+          "hazardousFlag": {
+            "type": "boolean"
+          },
+          "overweightFlag": {
+            "type": "boolean"
+          },
+          "specialCargoFlag": {
+            "type": "boolean"
+          },
+          "sealNumbers": {
+            "type": "string"
+          },
+          "insuranceNumber": {
+            "type": "string"
+          },
+          "insuranceDate": {
+            "type": "string"
+          },
+          "insuranceAmount": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "cargoValue": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "cargoCurrency": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "deletedFlag": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ShipmentVectorResponses": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShipmentVector"
+            }
+          }
+        }
+      },
+      "ShipmentSearchRequest": {
+        "type": "object",
+        "description": "Search Request to perform shipment search",
+        "properties": {
+          "shipPlanReference": {
+            "type": "string"
+          },
+          "transportUnitReference": {
+            "type": "string"
+          },
+          "transportUnitLabel": {
+            "type": "string"
+          },
+          "dateComplete": {
+            "type": "string"
+          }
+        }
+      },
+      "Shipment": {
+        "type": "object",
+        "description": "Representation of a Ship Plan Transport Unit",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "shipPlan": {
+            "$ref": "#/components/schemas/ShipPlanRef"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "dateDelivered": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateReceived": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateComplete": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "transportUnit": {
+            "$ref": "#/components/schemas/TransportUnitRef"
+          },
+          "transportUnitPriorityLevel": {
+            "type": "integer"
+          },
+          "transportUnitType": {
+            "$ref": "#/components/schemas/TransportUnitTypeRef"
+          },
+          "plannedProductCount": {
+            "type": "integer"
+          },
+          "plannedProductSupplierCount": {
+            "type": "integer"
+          },
+          "movementType": {
+            "$ref": "#/components/schemas/MovementType"
+          },
+          "shipmentStatus": {
+            "$ref": "#/components/schemas/TransportUnitShipmentStatus"
+          },
+          "active": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ShipmentDetail": {
+        "type": "object",
+        "description": "more details of a Ship Plan Transport Unit",
+        "properties": {
+          "shipment": {
+            "$ref": "#/components/schemas/Shipment"
+          },
+          "inactiveDate": {
+            "type": "string"
+          },
+          "startTransportNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "endTransportNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "dateGateOutEmptyForPickup": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "gateOutEmptyForPickupLocation": {
+            "type": "string"
+          },
+          "dateEmptyReturned": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "pickupNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "portOfLoadingNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "portOfUnloadingNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "inlandPortNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "portOfFinalDestinationNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "finalDestinationNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "portOfEntryNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "usIsfNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "usIsfControl": {
+            "$ref": "#/components/schemas/SptuCustomsControl"
+          },
+          "customsEntryControl": {
+            "$ref": "#/components/schemas/SptuCustomsControl"
+          },
+          "usIsfReference": {
+            "type": "string"
+          },
+          "usIsfNumber": {
+            "type": "string"
+          },
+          "usIsfLastStatus": {
+            "$ref": "#/components/schemas/TransportIsfStatus"
+          },
+          "usIsfLastStatusDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "usIsfLastStatusDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "productDeliverToTransportNodeCount": {
+            "type": "integer"
+          },
+          "productDeliverToTransportNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "productDateDeliveryBy": {
+            "$ref": "#/components/schemas/DateRef"
+          },
+          "dateArrivalAtDestinationCustomerAfter": {
+            "$ref": "#/components/schemas/DateRef"
+          },
+          "dateArrivalAtDestinationCustomerBy": {
+            "$ref": "#/components/schemas/DateRef"
+          },
+          "dateSupplierShip": {
+            "$ref": "#/components/schemas/DateRangeRef"
+          },
+          "dateSupplierPickup": {
+            "$ref": "#/components/schemas/DateRangeRef"
+          },
+          "dateSupplierGoodsReady": {
+            "$ref": "#/components/schemas/DateRangeRef"
+          }
+        }
+      },
+      "ShipmentResponses": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Shipment"
+            }
+          }
+        }
+      },
+      "TransportUnitSearchRequest": {
+        "type": "object",
+        "description": "Search Request to perform a transport unit search",
+        "properties": {
+          "transpprtUnitNumber": {
+            "type": "string"
+          },
+          "externalReference": {
+            "type": "string"
+          },
+          "transportUnitLabel": {
+            "type": "string"
+          }
+        }
+      },
+      "TransportUnitBrief": {
+        "type": "object",
+        "description": "brief information of transport units",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "transportUnit": {
+            "$ref": "#/components/schemas/TransportUnitRef"
+          },
+          "dateReturned": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateGateOutEmpty": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateGateInOrigin": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateReceived": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateDelivered": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateComplete": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateGoodsReady": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateRequiredDelivery": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateEstimatedDelivery": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "shipmentStatus": {
+            "$ref": "#/components/schemas/TransportUnitShipmentStatus"
+          },
+          "vectorNodeStatus": {
+            "$ref": "#/components/schemas/TransportUnitVectorNodeStatus"
+          },
+          "currentPosition": {
+            "$ref": "#/components/schemas/TransportUnitPosition"
+          },
+          "etd": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "eta": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "ete": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          }
+        }
+      },
+      "TransportUnit": {
+        "type": "object",
+        "properties": {
+          "transportUnitBrief": {
+            "$ref": "#/components/schemas/TransportUnitBrief"
+          },
+          "tradeTerm": {
+            "$ref": "#/components/schemas/TradeTermRef"
+          },
+          "derived": {
+            "type": "boolean"
+          },
+          "lastTransportEventTypeDescription": {
+            "type": "string"
+          },
+          "lastTransportEventTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "value": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/CurrencyRef"
+          },
+          "valueInPrimary": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "calculatedValueInPrimary": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "pieceCount": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "calculatedPieceCount": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "fromPort": {
+            "$ref": "#/components/schemas/AreaRef"
+          },
+          "portOfEntry": {
+            "$ref": "#/components/schemas/AreaRef"
+          },
+          "toPort": {
+            "$ref": "#/components/schemas/AreaRef"
+          },
+          "trackAndTraceCount": {
+            "type": "integer"
+          },
+          "transportEventCount": {
+            "type": "integer"
+          },
+          "transportEventUnprocessedCount": {
+            "type": "integer"
+          },
+          "weight": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "weightUnit": {
+            "$ref": "#/components/schemas/UnitRef"
+          },
+          "cube": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "cubeUnit": {
+            "$ref": "#/components/schemas/UnitRef"
+          },
+          "weightInKg": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "cubeInKg": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "transportUnitType": {
+            "$ref": "#/components/schemas/TransportUnitTypeRef"
+          },
+          "currentShipPlanVectorTransportUnitId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "relatedPurchaseOrderNumber": {
+            "type": "string"
+          },
+          "relatedSupplierDescription": {
+            "type": "string"
+          },
+          "relatedLogisticsSuppliers": {
+            "type": "string"
+          },
+          "relatedVendorInvoiceNumbers": {
+            "type": "string"
+          },
+          "relatedCustomsEntryNumbers": {
+            "type": "string"
+          },
+          "relatedSalesOrderNumbers": {
+            "type": "string"
+          }
+        }
+      },
+      "TransportUnitDetail": {
+        "type": "object",
+        "description": "full information of this transport unit",
+        "properties": {
+          "transportUnit": {
+            "$ref": "#/components/schemas/TransportUnit"
+          },
+          "currentTransportNodeDemurrageClockStartTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "currentTransportNodeDemurrageFreeTimeEnd": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "currentTransportNodeDemurrageClockEndTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "demurrageFreeTimeRemaining": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "currentTransportNodeDetentionClockStartTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "currentTransportNodeDetentionFreeTimeEnd": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "currentTransportNodeDetentionClockEndTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "detentionFreeTimeRemaining": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "currentPositionDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "currentTransportNodeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "currentTransportNode": {
+            "$ref": "#/components/schemas/TransportNodeRef"
+          },
+          "currentTransportNodeAccount": {
+            "$ref": "#/components/schemas/AccountRef"
+          },
+          "currentTransportNodeDemurrageEstimate": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "currentTransportNodeDetentionEstimate": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "percentAllocated": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "percentSourced": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "percentInvoiced": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "percentReceived": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "percentLotted": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "percentSold": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "loadType": {
+            "$ref": "#/components/schemas/TransportUnitLoadType"
+          },
+          "loadStatus": {
+            "$ref": "#/components/schemas/TransportUnitLoadStatus"
+          },
+          "eteWeek": {
+            "type": "integer"
+          },
+          "customsCurrentStatus": {
+            "$ref": "#/components/schemas/TransportCustomsStatus"
+          },
+          "customsLastStatusDate": {
+            "type": "string"
+          },
+          "customsAdditionalDetails": {
+            "type": "string"
+          },
+          "usCustomsLocationOfGoods": {
+            "type": "string"
+          },
+          "usCustomsLocationOfGoodsCode": {
+            "type": "string"
+          },
+          "appointmentReference": {
+            "type": "string"
+          },
+          "dateAppointment": {
+            "type": "string"
+          },
+          "appointmentTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          }
+        }
+      },
+      "TransportUnitResponses": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransportUnitBrief"
+            }
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "description": "Full information of an address row",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "cityCode": {
+            "type": "string"
+          },
+          "cityDescription": {
+            "type": "string"
+          },
+          "stateCode": {
+            "type": "string"
+          },
+          "stateStandardCode": {
+            "type": "string"
+          },
+          "stateIso2Code": {
+            "type": "string"
+          },
+          "stateDescription": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "countryIso2Code": {
+            "type": "string"
+          },
+          "countryDescription": {
+            "type": "string"
+          },
+          "address1": {
+            "type": "string"
+          },
+          "address2": {
+            "type": "string"
+          },
+          "address3": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          },
+          "aliasOfAddressId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "entityStatus": {
+            "$ref": "#/components/schemas/EntityStatus"
+          },
+          "latitude": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "boolean"
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-09-17T14:30:00.000Z"
+          },
+          "createdByUsername": {
+            "type": "string"
+          }
+        }
+      },
+      "AccountDetail": {
+        "type": "object",
+        "description": "Full information of an account ",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": "string"
+          },
+          "legalName": {
+            "type": "string"
+          },
+          "profileDescription": {
+            "type": "string"
+          },
+          "defaultAddressId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "defaultAddress": {
+            "$ref": "#/components/schemas/AddressRef"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/CurrencyRef"
+          },
+          "defaultPaymentTerm": {
+            "$ref": "#/components/schemas/DefaultPaymentTermRef"
+          },
+          "vendorInvoiceTemplate": {
+            "$ref": "#/components/schemas/VendorInvoiceTemplateRef"
+          },
+          "parentAccount": {
+            "$ref": "#/components/schemas/AccountRef"
+          },
+          "externalSystemReference": {
+            "type": "string"
+          },
+          "profileTypeLabels": {
+            "type": "string"
+          },
+          "company": {
+            "type": "boolean"
+          },
+          "internal": {
+            "type": "boolean"
+          },
+          "defaultExternalSystemId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "defaultExternalSystemCode": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "boolean"
+          },
+          "entityStatus": {
+            "$ref": "#/components/schemas/EntityStatus"
+          },
+          "producerId": {
+            "type": "string"
+          }
+        }
+      },
+      "AccountRef": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          }
+        }
+      },
+      "AreaRef": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "countryDescription": {
+            "type": "string"
+          },
+          "areaType": {
+            "type": "string"
+          },
+          "flagCode": {
+            "type": "string"
+          }
+        }
+      },
+      "TransportNodeRef": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "area": {
+            "$ref": "#/components/schemas/AreaRef"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nodeId": {
+            "type": "string"
+          },
+          "nodeType": {
+            "type": "string"
+          }
+        }
+      },
+      "TransportUnitRef": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "externalReference": {
+            "type": "string"
+          },
+          "transportUnitNumber": {
+            "type": "string"
+          },
+          "transportUnitLabelType": {
+            "$ref": "#/components/schemas/TransportUnitLabelType"
+          }
+        }
+      },
+      "TransportUnitTypeRef": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": "string"
+          },
+          "classification": {
+            "$ref": "#/components/schemas/TransportUnitClassification"
+          }
+        }
+      },
+      "ShipPlanRef": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "shipPlanTransportUnitId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "DateRef": {
+        "type": "object",
+        "properties": {
+          "requestedDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "promisedDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "notifiedDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "plannedDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "instructedDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "requiredDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "predictedDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "actualDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "bestDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          },
+          "dateConfirmed": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-09-17T00:00:00.000Z"
+          }
+        }
+      },
+      "DateRangeRef": {
+        "type": "object",
+        "properties": {
+          "after": {
+            "$ref": "#/components/schemas/DateRef"
+          },
+          "by": {
+            "$ref": "#/components/schemas/DateRef"
+          },
+          "bestDateType": {
+            "$ref": "#/components/schemas/DateRef"
+          }
+        }
+      },
+      "TradeTermRef": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "CurrencyRef": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "exchangeRate": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "UnitRef": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "ratio": {
+            "type": "number",
+            "format": "double"
+          },
+          "html": {
+            "type": "string"
+          }
+        }
+      },
+      "AddressRef": {
+        "type": "object",
+        "description": "Lightweight reference to an address",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "address1": {
+            "type": "string"
+          },
+          "address2": {
+            "type": "string"
+          },
+          "address3": {
+            "type": "string"
+          },
+          "cityDescription": {
+            "type": "string"
+          },
+          "stateDescription": {
+            "type": "string"
+          },
+          "stateStandardCode": {
+            "type": "string"
+          },
+          "countryDescription": {
+            "type": "string"
+          },
+          "countryIso2": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          }
+        }
+      },
+      "DefaultPaymentTermRef": {
+        "type": "object",
+        "description": "Reference to a default payment term",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "VendorInvoiceTemplateRef": {
+        "type": "object",
+        "description": "Reference to a vendor invoice template",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "DateType": {
+        "type": "string",
+        "enum": [
+          "Actual",
+          "Estimate",
+          "Confirmed",
+          "Instructed",
+          "Planned",
+          "Predicted"
+        ],
+        "example": "Actual"
+      },
+      "AssumedDateReasonCode": {
+        "type": "string",
+        "enum": [
+          "Load",
+          "Unload",
+          "BudgetedTime",
+          "Returned",
+          "Received"
+        ],
+        "example": "Load"
+      },
+      "TransportNodeType": {
+        "type": "string",
+        "enum": [
+          "AccountAddress",
+          "Port",
+          "Multi"
+        ],
+        "example": "Port"
+      },
+      "TransportUnitLoadType": {
+        "type": "string",
+        "enum": [
+          "LCL",
+          "FCL"
+        ],
+        "example": "LCL"
+      },
+      "TransportUnitLoadStatus": {
+        "type": "string",
+        "enum": [
+          "UNKNOWN",
+          "LOADED",
+          "Empty"
+        ],
+        "example": "UNKNOWN"
+      },
+      "TransportUnitClassification": {
+        "type": "string",
+        "enum": [
+          "Container",
+          "Package",
+          "BreakBulk",
+          "Cargo"
+        ],
+        "example": "Container"
+      },
+      "TransportEventTypeMeaning": {
+        "type": "string",
+        "enum": [
+          "VesselArrived",
+          "VesselDeparted",
+          "ContainerLoaded",
+          "ContainerUnloaded",
+          "ContainerReturned",
+          "CustomsRelease",
+          "CarrierRelease",
+          "EtaUpdate"
+        ],
+        "example": "EtaUpdate"
+      },
+      "TransportEventState": {
+        "type": "string",
+        "enum": [
+          "Planned",
+          "Complete"
+        ],
+        "example": "Planned"
+      },
+      "TransportEventSourceType": {
+        "type": "string",
+        "enum": [
+          "Feed",
+          "System",
+          "User"
+        ],
+        "example": "User"
+      },
+      "TransportUnitTransportEventStatus": {
+        "type": "string",
+        "enum": [
+          "Pending",
+          "Processed",
+          "Deleted"
+        ],
+        "example": "Deleted"
+      },
+      "VectorStatus": {
+        "type": "string",
+        "enum": [
+          "PreTransit",
+          "InTransit",
+          "Arrived"
+        ],
+        "example": "Arrived"
+      },
+      "MovementType": {
+        "type": "string",
+        "enum": [
+          "PortToPort",
+          "PortToDoor",
+          "DoorToPort"
+        ],
+        "example": "DoorToDoor"
+      },
+      "TransportUnitShipmentStatus": {
+        "type": "string",
+        "enum": [
+          "PreTransit",
+          "PickUp",
+          "AtPortOfLoading",
+          "InTransit",
+          "AtPortOfUnloading",
+          "Destination",
+          "Complete",
+          "ManuallyClosed",
+          "Unknown",
+          "PickedUp",
+          "Delivered",
+          "Emptied",
+          "Returned",
+          "Cancelled"
+        ],
+        "example": "PreTransit"
+      },
+      "SptuCustomsControl": {
+        "type": "string",
+        "enum": [
+          "Ignore",
+          "Status",
+          "Full"
+        ],
+        "example": "Status"
+      },
+      "TransportIsfStatus": {
+        "type": "string",
+        "enum": [
+          "InProgress",
+          "Good",
+          "Warn",
+          "Error"
+        ],
+        "example": "InProgress"
+      },
+      "TransportUnitLabelType": {
+        "type": "string",
+        "enum": [
+          "Reference",
+          "ExternalReference",
+          "TransportUnitNumber"
+        ],
+        "example": "Reference"
+      },
+      "TransportUnitVectorNodeStatus": {
+        "type": "string",
+        "enum": [
+          "Unknown",
+          "OnVector",
+          "AtNode",
+          "Returned",
+          "Complete"
+        ],
+        "example": "Unknown"
+      },
+      "TransportUnitPosition": {
+        "type": "string",
+        "enum": [
+          "PreTransit",
+          "OutForPickup",
+          "AtNode",
+          "OnVector",
+          "OutForReturn",
+          "Returned",
+          "Complete"
+        ],
+        "example": "PreTransit"
+      },
+      "EntityStatus": {
+        "type": "string",
+        "description": "Enumeration of possible entity statuses",
+        "enum": [
+          "Active",
+          "Suspended",
+          "Retired",
+          "Deleted"
+        ],
+        "example": "Active"
+      },
+      "TransportCustomsStatus": {
+        "type": "string",
+        "description": "Enumeration of possible entity statuses",
+        "enum": [
+          "Created",
+          "Submitted",
+          "Released",
+          "Held"
+        ],
+        "example": "Created"
       },
       "Error": {
         "type": "object",
-        "required": ["error", "message"],
         "properties": {
-          "error": { "type": "integer", "format": "int32" },
-          "message": { "type": "string" }
+          "code": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
         }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
       }
     }
   }
