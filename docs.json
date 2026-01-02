@@ -57,18 +57,28 @@
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Transportation Api",
             "pages": [
               "api-reference/endpoint/getETADateFromUsPort",
               "api-reference/endpoint/getActualDeliveryDate",
               "api-reference/endpoint/searchTransportEvent",
               "api-reference/endpoint/searchTransportNodes",
               "api-reference/endpoint/searchShipments",
-              "api-reference/endpoint/searchShipmentVectors"
+              "api-reference/endpoint/searchShipmentVectors",
+              "api-reference/endpoint/searchTransportUnits",
+              "api-reference/endpoint/getShipmentNode",
+              "api-reference/endpoint/getShipmentDetail",
+              "api-reference/endpoint/getTransportUnit",
+              "api-reference/endpoint/getTransportUnitDetail"
+                           ]
+          },
+          {
+            "group": "Account Api",
+            "pages": [
+              "api-reference/endpoint/getAccountDetail",
+              "api-reference/endpoint/getAddress"
 
-     
-  
-                  ]
+               ]
           }
         ]
       }
