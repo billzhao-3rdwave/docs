@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.3
 info:
   title: "3rdwWave OpenApi Documentation"
   description: "A sample API that allows the user to get access to 3rdwave data"
@@ -43,7 +43,7 @@ paths:
       tags:
         - Transportation
       operationId: searchActualDeliveryDate
-      description: "Query actual delivery date based on transport unit and location "
+      description: "Query actual delivery date based on transport unit and location"
       requestBody:
         description: "Transport Unit Node Request"
         required: true
@@ -618,6 +618,8 @@ components:
           type: string
         transportNodeAccountCode:
           type: string
+        transportNodeAccountDescription:
+          type: string
         sequenceIndex:
           type: integer
         shipPlanTransportUnitId:
@@ -725,7 +727,40 @@ components:
 
         assumedDateArrivedActualCode:
           $ref: "#/components/schemas/AssumedDateReasonCode"
-
+        dateDepartedPlanned:
+          type: string
+          format: date
+          example: 2025-09-17
+        dateDepartedConfirmed:
+          type: string
+          format: date
+          example: 2025-09-17
+        dateDepartedEstimated:
+          type: string
+          format: date
+          example: 2025-09-17
+        dateDepartedInstructed:
+          type: string
+          format: date
+          example: 2025-09-17
+        dateDepartedPredicted:
+          type: string
+          format: date
+          example: 2025-09-17
+        dateDepartedActual:
+          type: string
+          format: date
+          example: 2025-09-17
+        timeReceivedEstimated:
+          type: string
+        timeReceivedActual:
+          type: string
+        demurrageFreeTimeEndDate:
+          type: string
+          format: date
+          example: 2025-09-17
+        transportNodeAddress:
+          $ref: "#/components/schemas/AddressRef"
     TransportUnitNodeResponses:
       type: object
       properties:
@@ -742,6 +777,8 @@ components:
         vectorMode:
           type: string
         startTransportNode:
+          type: string
+        transportUnitLabel:
           type: string
     ShipmentVector:
       type: object
@@ -803,6 +840,18 @@ components:
           type: string
         relatedSupplierDescriptions:
           type: string
+        masterBillOfLadingNumber:
+          type: string
+        houseBillOfLadingNumber:
+          type: string
+        masterBillShipper:
+          $ref: "#/components/schemas/AccountRef"
+        masterBillConsignee:
+          $ref: "#/components/schemas/AccountRef"
+        houseBillShipper:
+          $ref: "#/components/schemas/AccountRef"
+        houseBillConsignee:
+          $ref: "#/components/schemas/AccountRef"
     ShipmentVectorDetail:
       type: object
       description: "Representation of a ShipPlanVectorTransportUnitRow"
@@ -1055,10 +1104,6 @@ components:
           type: string
         currentForwarderBillOfLadingNumber:
           type: string
-        masterBillOfLadingNumber:
-          type: string
-        houseBillOfLadingNumber:
-          type: string
         seawayBillNumber:
           type: string
         customsEntryNumber:
@@ -1174,6 +1219,10 @@ components:
           $ref: "#/components/schemas/TransportUnitShipmentStatus"
         active:
           type: boolean
+        dateEmptyReturned:
+          type: string
+          format: date
+          example: 2025-09-17
 
     ShipmentDetail:
       type: object
@@ -1193,10 +1242,6 @@ components:
           example: 2025-09-17
         gateOutEmptyForPickupLocation:
           type: string
-        dateEmptyReturned:
-          type: string
-          format: date
-          example: 2025-09-17
         pickupNode:
           $ref: "#/components/schemas/TransportNodeRef"
         portOfLoadingNode:

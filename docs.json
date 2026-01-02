@@ -60,7 +60,13 @@
             "group": "Endpoint examples",
             "pages": [
               "api-reference/endpoint/getETADateFromUsPort",
-              "api-reference/endpoint/getActualDeliveryDate"      
+              "api-reference/endpoint/getActualDeliveryDate",
+              "api-reference/endpoint/searchTransportEvent",
+              "api-reference/endpoint/searchTransportNodes",
+              "api-reference/endpoint/searchShipments",
+              "api-reference/endpoint/searchShipmentVectors"
+
+     
   
                   ]
           }
