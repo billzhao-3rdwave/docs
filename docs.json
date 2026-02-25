@@ -69,7 +69,10 @@
               "api-reference/endpoint/getShipmentNode",
               "api-reference/endpoint/getShipmentDetail",
               "api-reference/endpoint/getTransportUnit",
-              "api-reference/endpoint/getTransportUnitDetail"
+              "api-reference/endpoint/getTransportUnitDetail",
+              "api-reference/endpoint/getRelatedTransportUnitsByPurchaseOrderNumber",
+              "api-reference/endpoint/getRelatedTransportUnitsBySalesOrderNumber"
+
                            ]
           },
           {

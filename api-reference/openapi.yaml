@@ -374,6 +374,65 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /public/v1/transportation/getRelatedTransportUnitNumbersByPurchaseOrderNumber/{purchaseOrderNumber}:
+    get:
+      tags:
+        - Transportation
+      operationId: getRelatedTransportUnitNumbersByPurchaseOrderNumber
+      description: "Query By Purchase Order Number To Find Related Transport Units"
+      parameters:
+        - name: purchaseOrderNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Related transport unit references"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        "204":
+          description: "No purchase order found"
+        "400":
+          description: "Unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /public/v1/transportation/getRelatedTransportUnitNumbersBySalesOrderNumber/{salesOrderNumber}:
+    get:
+      tags:
+        - Transportation
+      operationId: getRelatedTransportUnitNumbersBySalesOrderNumber
+      description: "Query Sales Order Number To Find Related Transport Units"
+      parameters:
+        - name: salesOrderNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Related transport unit references"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        "204":
+          description: "No sales order found"
+        "400":
+          description: "Unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
 components:
   schemas:
